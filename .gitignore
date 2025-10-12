@@ -1,0 +1,15 @@
+# macOS system files
+.DS_Store
+._*
+.AppleDouble
+.Spotlight-V100
+.Trashes
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Cursor / VSCode
+.vscode/
+.history/
