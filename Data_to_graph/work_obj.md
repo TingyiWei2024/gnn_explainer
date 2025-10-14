@@ -1,0 +1,23 @@
+10.13
+目标：SMILES → RDKit → (alfabet)BDE → Graph(pkl) → 训练 全流程复现一次。
+验收产物：
+
+graph_bde.pkl 或 *.pt 成功生成（含 x/edge_index/edge_attr/y）
+
+训练脚本能跑出 epoch 10 | loss... | acc...（截图+日志）
+
+code summary:
+SMILES list
+  → canonicalize_smiles → check_input
+  → predict_bdes(can_smiles)  # per-bond predictions
+      → drop_duplicates(['fragment1','fragment2'])
+  → create_bde_graph_selective_hs(smiles, bde_df)
+      - Build RDKit heavy-atom Mol (no Hs)
+      - Nodes: heavy atoms (int ids)
+      - Edges: skeleton heavy-heavy bonds from Mol
+      - For each predicted row:
+          * if heavy-heavy: update or add edge with bde/bdfe
+          * if heavy-H: add 'H_x' node + heavy–H edge with bde/bdfe
+  → (optional) bde_df['nx_graph'] = graph
+→ concat all dfs → alfabet_results_022
+→ save graphs: gpickle_graph_{i}.pkl
