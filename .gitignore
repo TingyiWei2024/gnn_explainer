@@ -13,3 +13,15 @@ __pycache__/
 # Cursor / VSCode
 .vscode/
 .history/
+
+# virtual envs
+.env/
+.venv/
+venv/
+env/
+# conda envs（避免误加）
+*conda*/envs/
+# jupyter
+.ipynb_checkpoints/
+
+
