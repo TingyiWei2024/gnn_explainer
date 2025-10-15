@@ -24,19 +24,34 @@
 
 from .log files
 Summary of Natural Population Analysis
-## Natural Charge
+## Natural Charge -> **NodesF 1**
 
 To Multiwfn_3.8 encoding
-9 Bond order analysis
-## 9-1 Mayer bond order analysis
-## 9-3 Wiberg bond order analysis in Lowdin orthogonalized basis
-9-4 Mulliken bond order (Mulliken overlap population) analysis
+# 9 Bond order analysis
+## 9-1 Mayer bond order analysis：
+- bonder orders with absolute value ->**EdgesF 1**
+- Total valences and free valences defined by Mayer -> **NodesF 2**
 
- 7 Population analysis and calculation of atomic charges
-7-1  1 Hirshfeld atomic charge 
-	-  Use build-in sphericalized atomic densities in free-states (more convenient)
-7-5-1  Mulliken population analysis- Output Mulliken population and atomic charges
-	- Population of basis functions
-7-11-1  Atomic dipole corrected Hirshfeld atomic charge (ADCH) (recommended) 
-	- Use build-in sphericalized atomic densities in free-states (more convenient)
+## 9-3 Wiberg bond order analysis in Lowdin orthogonalized basis
+- Wiberg bond order -> **EdgesF 2**
+
+## 9-4 Mulliken bond order (Mulliken overlap population) analysis
+- bond order -> **EdgesF 3**
+
+# 7 Population analysis and calculation of atomic charges
+## 7-1  1 Hirshfeld atomic charge 
+	->  Use build-in sphericalized atomic densities in free-states (more convenient)
+- atom charges. -> **NodesF 3**
+
+## 7-5-1  Mulliken population analysis- Output Mulliken population and atomic charges
+	-> Population of basis functions
+- population -> **NodesF 4**
+- net charge -> **NodesF 5**
+
+## 7-11-1  Atomic dipole corrected Hirshfeld atomic charge (ADCH) (recommended) 
+	-> Use build-in sphericalized atomic densities in free-states (more convenient)
+- atom charges -> **NodesF 6**
+
+## 7-12-1 CHELPG ESP fitting atomic charge
+- Charge -> **NodesF 7**
 
