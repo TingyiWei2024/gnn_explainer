@@ -1,16 +1,22 @@
-10.13
+## 10.13 (得解决alfabet环境问题)
 目标：SMILES → RDKit → (alfabet)BDE → Graph(pkl) → 训练 全流程复现一次。
 验收产物：
-
 graph_bde.pkl 或 *.pt 成功生成（含 x/edge_index/edge_attr/y）
 
 训练脚本能跑出 epoch 10 | loss... | acc...（截图+日志）
 
 code summary:
-SMILES list
+1. env import
+安装 alfabet==0.2.2，导入 RDKit / NetworkX / pandas
+-> Q1 of model input in work_QA.md
+
+2. BDE 预测入口
   → canonicalize_smiles → check_input
   → predict_bdes(can_smiles)  # per-bond predictions
       → drop_duplicates(['fragment1','fragment2'])
+-> Q2 
+
+3. 建graph把bde/bdfe打包进edge_features      
   → create_bde_graph_selective_hs(smiles, bde_df)
       - Build RDKit heavy-atom Mol (no Hs)
       - Nodes: heavy atoms (int ids)
@@ -21,3 +27,8 @@ SMILES list
   → (optional) bde_df['nx_graph'] = graph
 → concat all dfs → alfabet_results_022
 → save graphs: gpickle_graph_{i}.pkl
+
+4. 核心：
+- 节点顺序：重原子优先且顺序与 RDKit（未加氢）一致；再接在后面的才是 H 节点。
+- 边集合：无向图统一成 (min(u,v), max(u,v)) 的唯一表述；如需传给 GNN 的“无向”，在 edge_index 里再复制一份反向边。
+- 列顺序：edge_attr 的列（比如 [bde_pred, bdfe_pred, bond_index]）要固定顺序，并写入一个 features_spec.json，供训练与解释器使用。

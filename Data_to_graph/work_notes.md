@@ -1,8 +1,8 @@
 一. module input
 
-**Q2.关于alfabet:https://github.com/NREL/alfabet**
+## **Q2.关于alfabet:https://github.com/NREL/alfabet**
 
-1. canonicalize_smiles
+### 1. canonicalize_smiles
 
 SMILES 就是“把分子写成一行字符串”的记法。但同一个分子可能有多种写法（等价）。
 canonical SMILES 就是把这类等价写法统一成唯一的标准写法——像给分子“发统一身份证”
@@ -12,7 +12,7 @@ s_can = canonicalize_smiles(s_raw)
 **-> 应该是源于rdkit最开始的基础库？有时间看看**
 **-> 有时间了去alfabet_canonical.md里继续研究**
 
-2.索引加不加H的问题
+### 2.索引加不加H的问题
 我们的代码逻辑：计算bde前不加H / 建图得有计算出来的H的位置放bde数据，这时候加上
 
 A. 不加H 原因：alfabet 训练的 GNN 模型是在“不加氢的分子”上训练的
@@ -27,17 +27,18 @@ C–H、O–H、N–H ……
 
 所以，我们在构图时采取一个“按需补氢”策略：
 在确定c-h的条件下
-1.先判定Hnode是否存在，没有得先加节点
-2.把没有的加上
-3.如果边有了，更新数值
+- 1.先判定Hnode是否存在，没有得先加节点
+- 2.把没有的加上
+- 3.如果边有了，更新数值
 
-💡 为什么边要写属性？
+### 💡 为什么边要写属性？
 因为我们的图不仅要存结构，还要存数值。
 每条边代表一个化学键，其属性包括：
 bond_index: 边在 alfabet 输出里的顺序或标识；
 bde_pred: 预测的键解离能；
 bdfe_pred: 预测的键解离自由能。
 
+---
 如果当前预测的键是重原子–氢键：
     创建一个唯一的氢节点ID（例如 H_-1）
     如果图里没有这个氢节点：
@@ -46,7 +47,7 @@ bdfe_pred: 预测的键解离自由能。
         添加边，并把 BDE/BDfE 写进去
     否则（已有这条边）：
         仅更新数值
-
+---
             # Step 1: ensure the hydrogen node is present in G
             # We'll generate a unique node key for the H, e.g. "H_{hydrogen_idx}"
             # or something that won't collide with integer-based heavy nodes.
@@ -64,4 +65,5 @@ bdfe_pred: 预测的键解离自由能。
                            bond_index=bond_index_value,
                            bde_pred=bde_pred_value,
                            bdfe_pred=bdfe_pred_value)
+---
 
