@@ -32,3 +32,11 @@ code summary:
 - 节点顺序：重原子优先且顺序与 RDKit（未加氢）一致；再接在后面的才是 H 节点。
 - 边集合：无向图统一成 (min(u,v), max(u,v)) 的唯一表述；如需传给 GNN 的“无向”，在 edge_index 里再复制一份反向边。
 - 列顺序：edge_attr 的列（比如 [bde_pred, bdfe_pred, bond_index]）要固定顺序，并写入一个 features_spec.json，供训练与解释器使用。
+
+
+10.15
+今日Mission：
+1️⃣ 解析 Excel 节点与边表；
+2️⃣ 构建 NetworkX 图并成功保存为 graph_nbo.pkl；
+3️⃣ 转化为 PyG Data 对象并验证 Data(x, edge_index, edge_attr)；
+4️⃣ 若时间许可，执行 GCN 测试循环并推送至数据库。
