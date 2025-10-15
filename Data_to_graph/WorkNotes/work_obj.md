@@ -40,3 +40,6 @@ code summary:
 2️⃣ 构建 NetworkX 图并成功保存为 graph_nbo.pkl；
 3️⃣ 转化为 PyG Data 对象并验证 Data(x, edge_index, edge_attr)；
 4️⃣ 若时间许可，执行 GCN 测试循环并推送至数据库。
+
+1. NBO FEATURES 整理
+   

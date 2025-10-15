@@ -48,3 +48,7 @@ alfabet / alfabet-lite 的逐键预测表统一使用 start_atom, end_atom（表
 **4.我们的图是无向图，pyg是有向图，我之前接口nbo脑子里没有这个概念**
 edge_index = tensor([u1, u2])的问题，是不是有可能是我报错的原因呢？
 标记一下，明天做nbo导入成图得特别注意一下
+
+---
+# 10.15
+1. nbo架构不用和bde一样单独做一个H-index吧？(不然又要从生成.gjf那开始改)
