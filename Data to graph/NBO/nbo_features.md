@@ -21,7 +21,7 @@
 - **for f in *-nbo.chk; do [ -f "$f" ] || continue; formchk "$f" "${f%.chk}.fchk"; done**
 ->我们需要的是.log和-nbo.fchk
 
-
+# NBO features
 from .log files
 Summary of Natural Population Analysis
 ## Natural Charge -> **NodesF 1**
@@ -55,3 +55,5 @@ To Multiwfn_3.8 encoding
 ## 7-12-1 CHELPG ESP fitting atomic charge
 - Charge -> **NodesF 7**
 
+# NBO excel build
+1. 

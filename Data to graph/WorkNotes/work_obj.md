@@ -1,3 +1,4 @@
+# BDE
 ## 10.13 (得解决alfabet环境问题)
 目标：SMILES → RDKit → (alfabet)BDE → Graph(pkl) → 训练 全流程复现一次。
 验收产物：
@@ -33,8 +34,8 @@ code summary:
 - 边集合：无向图统一成 (min(u,v), max(u,v)) 的唯一表述；如需传给 GNN 的“无向”，在 edge_index 里再复制一份反向边。
 - 列顺序：edge_attr 的列（比如 [bde_pred, bdfe_pred, bond_index]）要固定顺序，并写入一个 features_spec.json，供训练与解释器使用。
 
-
-10.15
+# NBO
+## 10.15
 今日Mission：
 1️⃣ 解析 Excel 节点与边表；
 2️⃣ 构建 NetworkX 图并成功保存为 graph_nbo.pkl；
@@ -42,4 +43,8 @@ code summary:
 4️⃣ 若时间许可，执行 GCN 测试循环并推送至数据库。
 
 1. NBO FEATURES 整理
-   
+-> 见nbo_features.md
+2. excel c24 sample 建立
+
+## 10.16 - continue 10.15 obj
+1.index alignment between NBO outputs and the RDKit graph
