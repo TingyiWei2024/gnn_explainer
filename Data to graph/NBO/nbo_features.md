@@ -63,21 +63,35 @@ To Multiwfn_3.8 encoding
 -> columns: mol_id / atom_idx / element / features
 		e.g.C24 / 1 / C&H /  
 -> node_features:
-q_npa — Natural charge (NPA) C24-ChargeFlog
-val_mayer_tot — Mayer total valence 9-1
-q_hirsh — Hirshfeld atomic charge 7-1
-pop_mull — Mulliken population (basis-function population) 7-5-4
-q_mull — Mulliken net atomic charge 7-5-4
-q_adch — Atomic Dipole-Corrected Hirshfeld charge (ADCH) 7-11
-q_chelpg — CHELPG charge 7-12
+q_npa — Natural charge (NPA) C24-ChargeFlog ✅
+val_mayer_tot — Mayer total valence 9-1 ✅
+q_hirsh — Hirshfeld atomic charge 7-1 ✅
+pop_mull — Mulliken population (basis-function population) 7-5-4 ✅
+q_mull — Mulliken net atomic charge 7-5-4 ✅
+q_adch — Atomic Dipole-Corrected Hirshfeld charge (ADCH) 7-11 ✅
+q_chelpg — CHELPG charge 7-12 ✅
 
 3. edge_features.xlsx
 -> columns: mol_id / src, dst / bond_idx/ features
 		e.g.C24 / 1,24 / / 
 -> edge_features
-bo_mayer_abs — Mayer bond order (absolute value) 9-1
-bo_wiberg — Wiberg bond order ( Löwdin basis ) 9-3
-bo_mull — Mulliken bond order (overlap population) 9-4
+bo_mayer_abs — Mayer bond order (absolute value) 9-1 ✅
+bo_wiberg — Wiberg bond order ( Löwdin basis ) 9-3 ✅
+bo_mull — Mulliken bond order (overlap population) 9-4 ✅
 
 ---
 4. catch text results in excel
+4.1 for node
+- parse the index and the element, also add "isH"
+
+4.2 for edge
+**Subtract 1 for 0-based indices**
+**Re-order as (src = min(i,j), dst = max(i,j))**
+
+- Parsed pairs (i, j, value) from the file, ignoring the element text in parentheses.
+- Converted to 0-based indices and stored each bond once with src < dst.
+- Took absolute value for Mayer (bo_mayer_abs = |value|).
+- Upserted into the Excel with columns: mol_id, src, dst, bo_mayer_abs (leaving bo_wiberg, bo_mull for later).
+
+-> r"\(\s*(\d+)\)\-\(\s*(\d+)\)\s+([+-]?\d+\.\d+)"
+→ captures atom i, atom j, and bond-order value

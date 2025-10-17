@@ -48,3 +48,6 @@ code summary:
 
 ## 10.16 - continue 10.15 obj
 1.index alignment between NBO outputs and the RDKit graph
+
+10.17 
+1.

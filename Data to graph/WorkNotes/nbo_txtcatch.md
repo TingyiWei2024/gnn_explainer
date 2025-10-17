@@ -34,7 +34,17 @@ pattern.search()、pattern.findall()、pattern.finditer()；
 
 ## 2. 读取文本并逐行匹配
 
+### edge prase logic
+The edge features capture bond-pair properties from the NBO/Multiwfn output.
+They will represent each bond (src ↔ dst) in your molecular graph.
+We already agreed the file will be edge_features.xlsx → sheet edges, with one row per bond and the following key rules:
 
+1 molecule → many bonds.
+→ We use mol_id to identify which molecule the bond belongs to.
 
+Edges are undirected in storage.
+→ Store each bond once with src < dst.
+(If the model later needs directed edges, we’ll double them during graph construction.)
 
-
+Indices correspond to RDKit atom indices after Chem.AddHs()
+→ These align perfectly with your node Excel.
