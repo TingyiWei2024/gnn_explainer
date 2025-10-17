@@ -67,3 +67,51 @@ bdfe_pred: 预测的键解离自由能。
                            bdfe_pred=bdfe_pred_value)
 ---
 
+### GPT 整理生成表格
+Final schemas (frozen)
+
+node_features.xlsx → sheet nodes
+
+mol_id — short ID (links to molecules.xlsx)
+
+atom_idx — RDKit 0-based index after Chem.AddHs()
+
+element — C, H, …
+
+is_H — 0/1
+
+q_npa — Natural charge (NPA)
+
+val_mayer_tot — Mayer total valence
+
+q_hirsh — Hirshfeld charge
+
+pop_mull — Mulliken population
+
+q_mull — Mulliken net atomic charge
+
+q_adch — ADCH charge
+
+q_chelpg — CHELPG charge
+
+edge_features.xlsx → sheet edges
+
+mol_id
+
+src, dst — RDKit 0-based atom indices after AddHs(). Store once with src < dst.
+
+bo_mayer_abs — |Mayer BO|
+
+bo_wiberg — Wiberg BO (Löwdin)
+
+bo_mull — Mulliken BO (overlap pop)
+
+Naming choice: we’ll use src/dst (clearer for later directed expansion).
+
+Invariants (we will validate in code):
+
+(mol_id, atom_idx) unique in nodes.
+
+(mol_id, src, dst) unique in edges, with src < dst.
+
+All indices exist in the RDKit mol after AddHs.

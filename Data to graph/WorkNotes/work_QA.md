@@ -1,3 +1,4 @@
+# BDE
 # 一. module input
 
 ## **Q1 为什么要导入RDKit / NetworkX / pandas，这几个库都是我们在运行数据转制输入时会常用的库吗？**
@@ -181,7 +182,6 @@ print(df.columns)
 3. 直接看表格常用code
 graph_to_df(graphs[0])
 
-
 # 三. 导入数据调用函数计算成图
 output：
 a. dfs → 存放每个分子的 bde_df（逐键预测表）；
@@ -248,4 +248,17 @@ with open('test.gpickle', 'rb') as f:
 
 
 
+---
+---
 
+
+# NBO
+# 一. model input
+## Q1 应该怎么设置输入列表，最少都应该含有哪些columns，每个features名字应该怎么简称
+-> 见node_features.md
+
+## Q2 怎么从gaussion和multiwfn的文件里直接把要的结果读取到excel对应列里面
+-> **见catch-data.md 的讨论，之后有时间了解了解**
+
+## Q3 从.txt里提取
+-> 

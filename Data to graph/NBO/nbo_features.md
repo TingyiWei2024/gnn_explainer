@@ -56,4 +56,28 @@ To Multiwfn_3.8 encoding
 - Charge -> **NodesF 7**
 
 # NBO excel build
-1. 
+1. molecules.csv
+-> SMILES和mol_id映射表
+
+2. node_features.xlsx
+-> columns: mol_id / atom_idx / element / features
+		e.g.C24 / 1 / C&H /  
+-> node_features:
+q_npa — Natural charge (NPA) C24-ChargeFlog
+val_mayer_tot — Mayer total valence 9-1
+q_hirsh — Hirshfeld atomic charge 7-1
+pop_mull — Mulliken population (basis-function population) 7-5-4
+q_mull — Mulliken net atomic charge 7-5-4
+q_adch — Atomic Dipole-Corrected Hirshfeld charge (ADCH) 7-11
+q_chelpg — CHELPG charge 7-12
+
+3. edge_features.xlsx
+-> columns: mol_id / src, dst / bond_idx/ features
+		e.g.C24 / 1,24 / / 
+-> edge_features
+bo_mayer_abs — Mayer bond order (absolute value) 9-1
+bo_wiberg — Wiberg bond order ( Löwdin basis ) 9-3
+bo_mull — Mulliken bond order (overlap population) 9-4
+
+---
+4. catch text results in excel
