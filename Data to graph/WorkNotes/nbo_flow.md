@@ -3,7 +3,3 @@ compute NBO
 → align to a consistent atom index 
 → build graphs 
 → feed a GNN
-
-
-
-4.
