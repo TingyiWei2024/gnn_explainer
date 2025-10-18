@@ -55,8 +55,10 @@ code summary:
 1. create assumed node and edge datasets
 
 10.18
-1️⃣ Data Intake
+1️⃣ Data Intake ✅
 2️⃣ Graph Construction
 3️⃣ Model Input Validation
 4️⃣ Training Pipeline
 5️⃣ Save/Load Functionality
+
+-? 用一个图检验nan在gnn整个传递过程里参与了哪部分的计算

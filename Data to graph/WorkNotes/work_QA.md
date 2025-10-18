@@ -264,3 +264,71 @@ with open('test.gpickle', 'rb') as f:
 -> 见nbo_txtcatch.md and fold C24_results
 
 ## Q4 use random value to assum dataset input
+-> NBO_input.ipynb
+
+## Q5 当我们在进行数据检查时，究竟在检查什么？
+1. Identifier invariants
+-> node_id: 不变量，node_id 是RDKit mol 中实际原子的双射
+-> src/dst：函数将每条边映射到一个有序对 (u,v)
+    - 多条边可能共享端点（多对一）
+    - 某些节点可能没有入射边（不全射到(u,v)）
+    - 如果图是无向的，则 (v,u) 仅在规范化（例如，排序端点）后才表示相同的边
+
+2. Type & null invariants
+-> gnn tensors: numerics: 
+- node/edge features ∈ ℝ
+- strings ❌
+- NaN requires resolution (imputation, masking, or removal)
+3. Schema normalization
+-> 规范列名，处理数据前就得考虑到
+4. Referential integrity test 参照完整性测试
+-> Compute sets V = {node_id}, E_src ⊆ V, E_dst ⊆ V
+-> 查有没有非零值（0用nan代替）
+5. Feature detection heuristic 特征检测启发式
+-> 确定特征列的数据
+### 特殊：边
+1. 自环 ： src==dst 的边。它们在你的化学中有意义吗？通常没有；标记或丢弃。❌
+2. Duplicate undirected edges： 重复无向边 ：如果将图视为无向图，则 (u,v) 和 (v,u) 重复。
+**确定规范顺序：enforce canonical ordering src ≤ dst; if duplicates (u,v) and (v,u) exist, keep one.** 
+3. 孤立节点 ：度为 0 的节点——它们是设计存在的吗？❌
+4. 多分子范围 ：如果表混合了分子，则需要一个 graph_id （或 mol_id ）列；然后每个图都适用不变量。**-> 把c24还得改掉**
+5. 单位一致性 ：例如，电荷（Hirshfeld vs Mulliken），键级（Mayer vs Wiberg）。未加标记的混合会破坏语义一致性 -> 在数据处理列名设计就得考虑
+
+## graph_id
+https://cactus.nci.nih.gov/chemical/structure
+URL: https://cactus.nci.nih.gov/chemical/structure/CC(C)CCC1C(C)CCC2C1(C)CCC3C(C)(C)CCCC23C/stdinchikey
+InChIKey=NMRHSKVRUWBTQL-UHFFFAOYSA-N
+这个生成的太长了，还是就用c24好了
+
+# Q6 NAN到底在gnn传递里参与了哪些部分的运算-> 要不要mask掉
+**Real data has missing edge features (NaN)**
+   NaNs can’t flow through tensors; choose one of these **clear policies** and be consistent:
+
+* **Impute + mask (recommended):**
+
+  * For each feature (x): impute (median/zero) → `x_imp`.
+  * Add a mask `x_is_missing` ∈ {0,1}. The model learns to “ignore” imputed values where mask==1.
+* **Feature-wise dropout:** treat missing as zero and rely on the mask; don’t include missing rows in the scaler fit.
+* **Modeling alternatives:**
+
+  * Drop features with >(p%) missing (e.g., (p=40%)).
+  * Drop edges with no usable attributes **only if** chemistry allows (often you still keep topology).
+* **Training hygiene:**
+
+  * Fit scalers on **observed** values only.
+  * Log imputation stats per column (count, median used).
+  * Unit test that no NaN remains in `edge_attr`/`x`.
+
+*Minimal PyG pattern (conceptual):*
+
+```python
+edge_attr = torch.tensor(X_imp, dtype=torch.float32)       # imputed values
+edge_attr_mask = torch.tensor(M_missing, dtype=torch.float32)  # 1 if missing
+# concat or keep mask separate for the model
+edge_attr_all = torch.cat([edge_attr, edge_attr_mask], dim=1)
+```
+
+# Q7 csv & excel 哪个更好
+- 见对比.md
+
+# Q8 

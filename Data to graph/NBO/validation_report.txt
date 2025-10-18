@@ -1,0 +1,67 @@
+# GNN Intake Validation Report (alias, undirected, NaN-kept)
+## Column mappings
+- graph key: graph_alias
+- node id: node_id ← atom_idx
+- edge ends: src ← a1, dst ← a2
+## Node-ID health
+- node_id nulls: 0; duplicates (table): 0
+## Referential integrity (per graph_alias)
+- ℹ️ Nodes contain graph_alias with no edges: ['C24']
+| graph_alias | bad_src | bad_dst | |V| nodes | |E| edges |
+|---|---:|---:|---:|---:|
+| C23 | 0 | 0 | 65 | 67 |
+| C24 | 0 | 0 | 68 | 0 |
+| C25 | 0 | 0 | 71 | 73 |
+| C26 | 0 | 0 | 74 | 76 |
+| C2822R | 0 | 0 | 80 | 82 |
+| C2822S | 0 | 0 | 74 | 76 |
+| C29 | 0 | 0 | 79 | 83 |
+| C2922R | 0 | 0 | 83 | 85 |
+| C2922S | 0 | 0 | 83 | 85 |
+| C30 | 0 | 0 | 82 | 86 |
+| H31R | 0 | 0 | 85 | 89 |
+| H31S | 0 | 0 | 85 | 89 |
+| H32R | 0 | 0 | 88 | 92 |
+| H32S | 0 | 0 | 88 | 92 |
+| H33R | 0 | 0 | 91 | 95 |
+| H33S | 0 | 0 | 91 | 95 |
+| H34R | 0 | 0 | 94 | 98 |
+| H34S | 0 | 0 | 94 | 98 |
+| Tm | 0 | 0 | 73 | 77 |
+| Ts | 0 | 0 | 73 | 77 |
+- ✅ No invalid edge references found.
+## Undirected normalization
+- canonical src<=dst; duplicates removed: 0
+## Data quality (nulls/dtypes/non-finite)
+- Top nodes columns by null%:
+                 dtype  nulls  null_%  nonfinite_count  unique_nonnull  is_constant
+graph_alias     object      0     0.0                0              20        False
+atom_idx         int64      0     0.0                0              94        False
+element         object      0     0.0                0               2        False
+is_H             int64      0     0.0                0               2        False
+q_npa          float64      0     0.0                0            1620        False
+val_mayer_tot  float64      0     0.0                0            1621        False
+q_hirsh        float64      0     0.0                0            1621        False
+pop_mull       float64      0     0.0                0            1621        False
+q_mull         float64      0     0.0                0            1621        False
+q_adch         float64      0     0.0                0            1621        False
+- Top edges columns by null%:
+                dtype  nulls  null_%  nonfinite_count  unique_nonnull  is_constant
+graph_alias    object      0     0.0                0              19        False
+bond_idx        int64      0     0.0                0              98        False
+a1              int64      0     0.0                0              34        False
+a2              int64      0     0.0                0              93        False
+elem1          object      0     0.0                0               1         True
+elem2          object      0     0.0                0               2        False
+pair           object      0     0.0                0               2        False
+distance      float64      0     0.0                0            1539        False
+bo_mayer_abs  float64      0     0.0                0            1615        False
+bo_wiberg     float64      0     0.0                0            1615        False
+## NaN policy
+- NaNs retained at intake; no imputation at this stage.
+- Later: impute + add missingness masks; fit scalers on observed values only.
+## Detected numeric feature columns
+- Node features (count=9): ['atom_idx', 'is_H', 'q_npa', 'val_mayer_tot', 'q_hirsh', 'pop_mull', 'q_mull', 'q_adch', 'q_chelpg']
+- Edge features (count=7): ['bond_idx', 'a1', 'a2', 'distance', 'bo_mayer_abs', 'bo_wiberg', 'bo_mull']
+✅ Saved standardized nodes → nodes_standardized.csv
+✅ Saved standardized edges → edges_standardized.csv
