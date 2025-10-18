@@ -6,4 +6,4 @@ compute NBO
 
 
 
-4.because the 20 molecules have different mol and atom index number, so 
+4.

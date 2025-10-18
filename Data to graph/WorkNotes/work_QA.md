@@ -261,4 +261,6 @@ with open('test.gpickle', 'rb') as f:
 -> **见catch-data.md 的讨论，之后有时间了解了解**
 
 ## Q3 从.txt里提取
--> 
+-> 见nbo_txtcatch.md and fold C24_results
+
+## Q4 use random value to assum dataset input

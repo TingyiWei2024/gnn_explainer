@@ -48,6 +48,8 @@ code summary:
 
 ## 10.16 - continue 10.15 obj
 1.index alignment between NBO outputs and the RDKit graph
+- mol = MolFromSmiles(smiles) → can_smiles = MolToSmiles(mol, canonical=True)
+- mol_can = MolFromSmiles(can_smiles) → mol_H = AddHs(mol_can)
 
 10.17 
-1.
+1. 
